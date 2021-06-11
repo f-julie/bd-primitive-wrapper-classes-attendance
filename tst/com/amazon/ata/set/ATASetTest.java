@@ -1,4 +1,4 @@
-package com.amazon.ata.generics.classroom.set;
+package com.amazon.ata.set;
 
 import org.junit.jupiter.api.Test;
 

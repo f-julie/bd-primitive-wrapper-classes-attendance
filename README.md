@@ -1,9 +1,6 @@
 ## Weekly Roster Manager
 
-**Branch name:** generics-classroom
-
-**RDE workflow:**
-* weekly-roster-main
+**GitHub repo:** [ebd-primitive-wrapper-classes-attendance](https://github.com/LambdaSchool/ebd-primitive-wrapper-classes-attendance)
 
 ### Context
 
@@ -157,7 +154,7 @@ For completion, implement the methods:
 You can interact with the code via the main method provided by running
 it in IntelliJ or by running: 
 
-    rde wflow run weekly-roster-main
+    ./gradlew -q clean :test
 
 ### EXTENSION: Implement `scheduleSwap`
 As an extension, you can implement section swaps. You should implement 
@@ -247,7 +244,7 @@ Setting class rosters to standard sections.
 ### Commit & Push
  
 1. When you have the code to where you want it (at least compiling,
-   ideally, workflow `weekly-roster-main` succeeding), commit it.
+   ideally tests succeeding), commit it.
 1. Push it to your remote branch.
 1. Go back to the Weekly Roster Manger Canvas page and paste in a link
-   to your commit on Code Browser.
+   to your commit.

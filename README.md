@@ -1,7 +1,5 @@
 ## Weekly Roster Manager
 
-**GitHub repo:** [ebd-primitive-wrapper-classes-attendance](https://github.com/LambdaSchool/ebd-primitive-wrapper-classes-attendance)
-
 ### Context
 
 This activity was written during a previous version of ATA. At the time,

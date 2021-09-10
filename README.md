@@ -152,9 +152,7 @@ For completion, implement the methods:
 - `boolean scheduleAbsence(SectionDay attendedSection, long participantId)`
 
 You can interact with the code via the main method provided by running
-it in IntelliJ or by running: 
-
-    ./gradlew -q clean :test
+it in IntelliJ.
 
 ### EXTENSION: Implement `scheduleSwap`
 As an extension, you can implement section swaps. You should implement 

@@ -1,6 +1,8 @@
 package com.amazon.ata.attendance.management;
 
+import com.amazon.ata.attendance.participants.Participant;
 import com.amazon.ata.attendance.participants.ParticipantManager;
+import com.amazon.ata.set.ATASet;
 
 import java.time.LocalDate;
 
@@ -14,7 +16,9 @@ public class WeeklyRosterManager {
     private ParticipantManager manager;
 
     // Participants - decide on how to track the state of the WeeklyRosterManager and include it here
-
+    // We need two ATA sets, one for Tuesday and one for Thursday
+    private ATASet<Participant> tuesdayParticipants;
+    private ATASet<Participant> thursdayParticipants;
 
     /**
      * Instantiates a new Weekly roster manager.
@@ -25,6 +29,8 @@ public class WeeklyRosterManager {
     public WeeklyRosterManager(LocalDate weekOfDate, ParticipantManager participantManager) {
         mondayOfTeachingWeek = weekOfDate;
         manager = participantManager;
+        tuesdayParticipants = new ATASet<>(34);
+        thursdayParticipants = new ATASet<>(34);
     }
 
     /**
@@ -42,7 +48,6 @@ public class WeeklyRosterManager {
 
         sectionManager.addParticipantsToSection(SectionDay.THURSDAY, "30,31,32,33,34,35,36,37,38,39,40,41,42,43," +
             "44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59");
-
 
         System.out.println("\nMarking participants as absent.");
         // Mark Brian Oller absent from correct section
@@ -109,6 +114,24 @@ public class WeeklyRosterManager {
      */
     private void addParticipantsToSection(SectionDay section, String participantList) {
         // ATA Participants - implement
+        //System.out.println("section = " + section);
+        //System.out.println("participantList = " + participantList);
+        String[] participantIds = participantList.split(",");
+        for (String idString : participantIds) {
+            Long temp = Long.parseLong(idString);
+            long id = temp.longValue(); // Unboxing using two steps instead of letting Java do it for me
+            System.out.println("id = " + id);
+            Participant participant = manager.lookupParticipantById(id); // Unboxing again
+            if (section == SectionDay.TUESDAY) {
+                if (!tuesdayParticipants.add(participant)) {
+                    System.out.println("Failed to add participant with id: " + id);
+                }
+            } else {
+                if (!thursdayParticipants.add(participant)) {
+                    System.out.println("Failed to add participant with id: " + id);
+                }
+            }
+        }
     }
 
     /**
@@ -118,6 +141,20 @@ public class WeeklyRosterManager {
      */
     public void printSectionRosters() {
         // ATA Participants - implement
+        // 28 participants attending class on: TUESDAY the week of: 2019-08-13
+        // Participant ID: 1, Alias: beckwc, Name: Conner Beckwith
+        // Participant ID: 2, Alias: shanelys, Name: Shane Lyse
+
+        System.out.printf("%d participants attending class on: TUESDAY the week of: %s\n\n",
+                this.tuesdayParticipants.size(), this.mondayOfTeachingWeek);
+        for (Participant participant : tuesdayParticipants) {
+            System.out.println(participant);
+        }
+        System.out.printf("\n%d participants attending class on: THURSDAY the week of: %s\n\n",
+                this.thursdayParticipants.size(), this.mondayOfTeachingWeek);
+        for (Participant participant : thursdayParticipants) {
+            System.out.println(participant);
+        }
     }
 
     /**
@@ -131,7 +168,12 @@ public class WeeklyRosterManager {
      */
     public boolean scheduleAbsence(SectionDay attendedSection, long participantId) {
         // ATA Participants - implement
-        return false;
+        Participant participant = manager.lookupParticipantById(participantId);
+        if (attendedSection == SectionDay.TUESDAY) {
+            return tuesdayParticipants.remove(participant); // boolean - successful remove or not
+        } else {
+            return thursdayParticipants.remove(participant);
+        }
     }
 
     /**
